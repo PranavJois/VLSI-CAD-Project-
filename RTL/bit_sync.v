@@ -1,3 +1,6 @@
+`ifndef BIT_SYNC_V
+`define BIT_SYNC_V
+
 module bit_sync (
     input  wire clk,
     input  wire rst,
@@ -17,3 +20,4 @@ module bit_sync (
     end
 endmodule
 
+`endif // BIT_SYNC_V
