@@ -1,4 +1,4 @@
-module gray2bin #(parameter W=4)(
+module gray2bin #(parameter W=3)(
     input  wire [W:0] gray,
     output reg  [W:0] bin
 );
