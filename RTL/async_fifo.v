@@ -1,3 +1,5 @@
+
+
 module async_fifo #(
     parameter DATA_W = 65,
     parameter ADDR_W = 3
@@ -9,10 +11,12 @@ module async_fifo #(
     input  wire                 wr_fire,
     input  wire [DATA_W-1:0]    wr_data,
     output wire                 full,
+    output wire                 fifo_full,
 
     input  wire                 rd_fire,
     output reg  [DATA_W-1:0]    rd_data,
-    output wire                 empty
+    output wire                 empty,
+    output wire                 fifo_empty
 );
 
     localparam DEPTH = 1 << ADDR_W;
@@ -22,7 +26,7 @@ module async_fifo #(
     reg  [ADDR_W:0] wptr_bin, rptr_bin;
     wire [ADDR_W:0] wptr_gray, rptr_gray;
 
-    reg [ADDR_W:0] wptr_gray_rdclk, rptr_gray_wrclk;
+    wire [ADDR_W:0] wptr_gray_rdclk, rptr_gray_wrclk;
 
     genvar i;
     generate
@@ -54,11 +58,16 @@ module async_fifo #(
         end
     end
 
-    assign empty = (rptr_gray == wptr_gray_rdclk);
+    assign fifo_empty = (rptr_gray == wptr_gray_rdclk);
 
     assign full  = (wptr_gray == {
                     ~rptr_gray_wrclk[ADDR_W:ADDR_W-1],
                      rptr_gray_wrclk[ADDR_W-2:0]
                    });
+
+    assign fifo_full  = (wptr_gray == {
+                        ~rptr_gray_wrclk[ADDR_W:ADDR_W-1],
+                         rptr_gray_wrclk[ADDR_W-2:0]
+                       });
 
 endmodule
