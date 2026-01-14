@@ -1,27 +1,26 @@
-module top (
-    input wire clk_a,
-    input wire clk_b,
-    input wire rst
-);
 
-    wire [31:0] paddr_a, pwdata_a, prdata_a;
-    wire pwrite_a, psel_a, penable_a, pready_a;
+module top(input clk_a, clk_b, rst);
 
-    wire [31:0] paddr_b, pwdata_b, prdata_b;
-    wire pwrite_b, psel_b, penable_b, pready_b;
+wire [31:0] paddr_a, pwdata_a, prdata_a;
+wire pwrite_a, psel_a, penable_a, pready_a;
 
-    apb_master M (.clk(clk_a), .rst(rst), .paddr(paddr_a), .pwdata(pwdata_a),
-                  .pwrite(pwrite_a), .psel(psel_a), .penable(penable_a),
-                  .pready(pready_a), .prdata(prdata_a));
+wire [31:0] paddr_b, pwdata_b, prdata_b;
+wire pwrite_b, psel_b, penable_b, pready_b;
 
-    apb_async_bridge B ( .clk_a(clk_a), .rst_a(rst), .clk_b(clk_b), .rst_b(rst),
-        .paddr_a(paddr_a), .pwdata_a(pwdata_a), .pwrite_a(pwrite_a),
-        .psel_a(psel_a), .penable_a(penable_a), .prdata_a(prdata_a), .pready_a(pready_a),
-        .paddr_b(paddr_b), .pwdata_b(pwdata_b), .pwrite_b(pwrite_b),
-        .psel_b(psel_b), .penable_b(penable_b), .prdata_b(prdata_b), .pready_b(pready_b)
-    );
+wire [31:0] result;
+wire done;
 
-    apb_slave S (.clk(clk_b), .rst(rst), .paddr(paddr_b), .pwdata(pwdata_b),
-                  .pwrite(pwrite_b), .psel(psel_b), .penable(penable_b),
-                  .prdata(prdata_b), .pready(pready_b));
+apb_master M(clk_a, rst, paddr_a, pwdata_a, pwrite_a, psel_a, penable_a,
+             pready_a, prdata_a, result, done);
+
+apb_async_bridge B(clk_a, clk_b, rst,
+             paddr_a, pwdata_a, pwrite_a, psel_a, penable_a,
+             pready_a, prdata_a,
+             paddr_b, pwdata_b, pwrite_b, psel_b, penable_b,
+             pready_b, prdata_b);
+
+apb_slave S(clk_b, rst, paddr_b, pwdata_b, pwrite_b, psel_b, penable_b,
+            pready_b, prdata_b);
+
 endmodule
+
