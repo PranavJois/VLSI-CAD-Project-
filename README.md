@@ -53,8 +53,10 @@ APB Master (clk A)
 APB Slave (clk B)
 
 
-
+Project Proposal: 
 
 
 [VLSI_CAD_Project_Proposal.pdf](https://github.com/user-attachments/files/24605533/VLSI_CAD_Project_Proposal.pdf)
+
+
 
