@@ -4,5 +4,3 @@ module bin2gray #(parameter W=3)(
 );
     assign gray = (bin >> 1) ^ bin;
 endmodule
-
-
