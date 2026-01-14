@@ -48,7 +48,7 @@ APB Master (clk A)
         
 APB Slave (clk B)
 
-![Alt text for the image](HOME/Downloads/img.png)
+![Alt text for the image](Downloads/img.png)
 
 
 
