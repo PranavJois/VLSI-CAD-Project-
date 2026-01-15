@@ -52,7 +52,6 @@ APB Master (clk A)
         
 APB Slave (clk B)
 
-
 Project Proposal: 
 
 
