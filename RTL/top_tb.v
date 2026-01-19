@@ -2,18 +2,20 @@
 
 module top_tb;
 
-    reg clk = 0;
+    reg clk_a = 0;
+    reg clk_b = 0;
     reg rst = 1;
 
-    always #5 clk = ~clk;
+    always #5 clk_a = ~clk_a;
+    always #8.3 clk_b = ~clk_b;
 
     wire [31:0] paddr, pwdata, prdata;
     wire pwrite, psel, penable, pready;
     wire [31:0] result;
     wire done;
 
-    apb_master M(clk, rst, paddr, pwdata, pwrite, psel, penable, pready, prdata, result, done);
-    apb_slave  S(clk, rst, paddr, pwdata, pwrite, psel, penable, pready, prdata);
+    apb_master M(clk_a, rst, paddr, pwdata, pwrite, psel, penable, pready, prdata, result, done);
+    apb_slave  S(clk_b, rst, paddr, pwdata, pwrite, psel, penable, pready, prdata);
 
     initial begin
         $display("SIM START");
