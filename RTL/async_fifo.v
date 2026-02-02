@@ -1,5 +1,3 @@
-
-
 module async_fifo #(
     parameter DATA_W = 65,
     parameter ADDR_W = 3
